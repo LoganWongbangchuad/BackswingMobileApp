@@ -1,45 +1,67 @@
 ﻿@page "/CreateAccount"
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+@using System.ComponentModel.DataAnnotations
 
-    <title>Signin Template for Bootstrap</title>
+<EditForm Model="@accountModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
-</head>
-
-<body class="text-center">
-    <form class="form-signin">
+    <div class="text-center">
         <img class="mb-4" src="Resources/Images/backswinglogo.png" alt="Backswing Logo" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Create Your Account</h1>
-        
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
 
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="form-group">
+            <label for="inputEmail">Email address</label>
+            <InputText id="inputEmail" class="form-control" @bind-Value="accountModel.Email" placeholder="Email address" />
+            <ValidationMessage For="@(() => accountModel.Email)" />
+        </div>
 
-        <label for="confirmPassword" class="sr-only">Confirm Password</label>
-        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <InputText id="inputUsername" class="form-control" @bind-Value="accountModel.Username" placeholder="Username" />
+            <ValidationMessage For="@(() => accountModel.Username)" />
+        </div>
 
-        <NavLink class="btn btn-lg btn-primary btn-block" href="/">
-            Create your account
-        </NavLink>
-    </form>
-</body>
-</html>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <InputText id="inputPassword" type="password" class="form-control" @bind-Value="accountModel.Password" placeholder="Password" />
+            <ValidationMessage For="@(() => accountModel.Password)" />
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <InputText id="confirmPassword" type="password" class="form-control" @bind-Value="accountModel.ConfirmPassword" placeholder="Confirm Password" />
+            <ValidationMessage For="@(() => accountModel.ConfirmPassword)" />
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Create your account</button>
+    </div>
+</EditForm>
+
+@code {
+    private AccountModel accountModel = new AccountModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle the form submission, e.g., send data to the server
+        Console.WriteLine("Account created successfully!");
+    }
+
+    public class AccountModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+}
