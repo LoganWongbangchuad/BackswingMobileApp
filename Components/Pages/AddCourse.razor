@@ -1,0 +1,52 @@
+﻿@page "/AddCourse"
+
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@courseModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="text-center">
+        <h1 class="h3 mb-3 font-weight-normal">Add the Course</h1>
+
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <InputText id="inputName" class="form-control" @bind-Value="courseModel.Name" placeholder="Course Name" />
+            <ValidationMessage For="@(() => courseModel.Name)" />
+        </div>
+
+        <div class="form-group">
+            <label for="inputHole">Holes</label>
+            <InputNumber id="inputHole" class="form-control" @bind-Value="courseModel.Hole" placeholder="How many holes" />
+            <ValidationMessage For="@(() => courseModel.Hole)" />
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Add Course</button>
+    </div>
+</EditForm>
+
+@code {
+    private CourseModel courseModel = new CourseModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle the form submission, e.g., save the data to a database
+        // You can add your custom logic here
+        // For example:
+        // - Save the course to a database
+        // - Display a success message to the user
+        // - Redirect to a different page
+
+        Console.WriteLine($"Course submitted: {courseModel.Name} - {courseModel.Hole}");
+    }
+
+    public class CourseModel
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Amount of holes is required.")]
+        [Range(1, 19, ErrorMessage = "Amount of holes must be between 1-18")]
+        public int Hole { get; set; }
+    }
+}

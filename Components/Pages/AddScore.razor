@@ -1,0 +1,46 @@
+﻿@page "/AddScore"
+
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@scoreModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="text-center">
+        <h1 class="h3 mb-3 font-weight-normal">Add Your Score</h1>
+
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <InputText id="inputName" class="form-control" @bind-Value="scoreModel.Name" placeholder="Your name" />
+            <ValidationMessage For="@(() => scoreModel.Name)" />
+        </div>
+
+        <div class="form-group">
+            <label for="inputScore">Score</label>
+            <InputNumber id="inputScore" class="form-control" @bind-Value="scoreModel.Score" placeholder="Your score" />
+            <ValidationMessage For="@(() => scoreModel.Score)" />
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Submit Score</button>
+    </div>
+</EditForm>
+
+@code {
+    private ScoreModel scoreModel = new ScoreModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle the form submission, e.g., save the score to a database
+        Console.WriteLine($"Score submitted: {scoreModel.Name} - {scoreModel.Score}");
+    }
+
+    public class ScoreModel
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Score is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Score must be a positive number.")]
+        public int Score { get; set; }
+    }
+}

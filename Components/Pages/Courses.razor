@@ -9,6 +9,13 @@
         <div class="container">
             <h1 class="jumbotron-heading">Courses in your area</h1>
         </div>
+        <section class="jumbotron text-center">
+            <div class="container">
+                <p>
+                    <a href="/AddCourse" class="btn btn-primary my-2">Add Course</a>
+                </p>
+            </div>
+        </section>
     </section>
     <div class="album py-5 bg-light">
         <div class="container">
@@ -19,12 +26,13 @@
                         <div class="card mb-4 box-shadow">
                             <img class="card-img-top" src="@course.ImageUrl" alt="Card image cap">
                             <div class="card-body">
+                                <h1 class="card-header">@course.CourseName</h1>
                                 <p class="card-text">@course.Description</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="/Leaderboards" class="btn btn-outline-secondary">Leaderboards</a>
                                     </div>
-                                    <small class="text-muted">@course.Duration</small>
+                                    <small class="text-muted">@course.Holes Holes</small>
                                 </div>
                             </div>
                         </div>
@@ -34,6 +42,7 @@
         </div>
     </div>
 </main>
+
 
 @code {
     private List<Course> CourseList { get; set; } = new List<Course>();

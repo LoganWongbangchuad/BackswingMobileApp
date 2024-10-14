@@ -7,9 +7,9 @@ public class CourseService
 
         return new List<Course>
         {
-            new Course { ImageUrl = "image1.jpg", Description = "Course 1 description", Duration = "9 mins" },
-            new Course { ImageUrl = "image2.jpg", Description = "Course 2 description", Duration = "9 mins" },
-            new Course { ImageUrl = "image3.jpg", Description = "Course 3 description", Duration = "9 mins" }
+            new Course { CourseName = "Quicksand Golf Course", ImageUrl = "image1.jpg", Description = "Course 1 description", Holes = 9 },
+            new Course { CourseName = "Riverside Golf Course", ImageUrl = "image2.jpg", Description = "Course 2 description", Holes = 18 },
+            new Course { CourseName = "Bentwood Golf Course", ImageUrl = "image3.jpg", Description = "Course 3 description", Holes = 18 }
         };
     }
 }
