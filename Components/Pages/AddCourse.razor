@@ -1,6 +1,7 @@
 ﻿@page "/AddCourse"
 
 @using System.ComponentModel.DataAnnotations
+@inject CourseService courseService
 
 <EditForm Model="@courseModel" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -11,14 +12,14 @@
 
         <div class="form-group">
             <label for="inputName">Name</label>
-            <InputText id="inputName" class="form-control" @bind-Value="courseModel.Name" placeholder="Course Name" />
-            <ValidationMessage For="@(() => courseModel.Name)" />
+            <InputText id="inputName" class="form-control" @bind-Value="courseModel.CourseName" placeholder="Course Name" />
+            <ValidationMessage For="@(() => courseModel.CourseName)" />
         </div>
 
         <div class="form-group">
             <label for="inputHole">Holes</label>
-            <InputNumber id="inputHole" class="form-control" @bind-Value="courseModel.Hole" placeholder="How many holes" />
-            <ValidationMessage For="@(() => courseModel.Hole)" />
+            <InputNumber id="inputHole" class="form-control" @bind-Value="courseModel.Holes" placeholder="How many holes" />
+            <ValidationMessage For="@(() => courseModel.Holes)" />
         </div>
 
         <button type="submit" class="btn btn-lg btn-primary btn-block">Add Course</button>
@@ -28,25 +29,25 @@
 @code {
     private CourseModel courseModel = new CourseModel();
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        // Handle the form submission, e.g., save the data to a database
-        // You can add your custom logic here
-        // For example:
-        // - Save the course to a database
-        // - Display a success message to the user
-        // - Redirect to a different page
+        var course = new Course
+        {
+            CourseName = courseModel.CourseName,
+            Holes = courseModel.Holes
+        };
 
-        Console.WriteLine($"Course submitted: {courseModel.Name} - {courseModel.Hole}");
+        await courseService.SaveCourseAsync(course);
+        Console.WriteLine($"Course submitted: {course.CourseName} - {course.Holes}");
     }
 
     public class CourseModel
     {
         [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
+        public string CourseName { get; set; }
 
         [Required(ErrorMessage = "Amount of holes is required.")]
-        [Range(1, 19, ErrorMessage = "Amount of holes must be between 1-18")]
-        public int Hole { get; set; }
+        [Range(1, 18, ErrorMessage = "Amount of holes must be between 1-18")]
+        public int Holes { get; set; }
     }
 }

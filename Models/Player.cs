@@ -1,6 +1,9 @@
+using SQLite;
+
 public class Player
 {
-    public int Rank { get; set; }
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
     public string Name { get; set; }
     public int Score { get; set; }
 }

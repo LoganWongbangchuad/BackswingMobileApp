@@ -7,7 +7,7 @@ public class LeaderboardService
 
         return new List<Player>
         {
-            new Player { Rank = 1, Name = "Logan Wongbangchuad", Score = 84 },
+            new Player { Name = "Logan Wongbangchuad", Score = 84 },
             // Add more players as needed
         };
     }
