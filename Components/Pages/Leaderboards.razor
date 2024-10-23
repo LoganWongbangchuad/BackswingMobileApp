@@ -12,7 +12,6 @@
                 <table class="table table-striped">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">Rank</th>
                             <th scope="col">Player Name</th>
                             <th scope="col">Score</th>
                         </tr>
@@ -40,16 +39,14 @@
     </p>
 </div>
 </section>
+
+
 @code {
     private List<Player> Players { get; set; } = new List<Player>();
-
-
 
     protected override async Task OnInitializedAsync()
 
     {
-
-        Players = await LeaderboardService.GetLeaderboardAsync();
-
+        Players = await LeaderboardService.GetPlayersAsync();
     }
 }

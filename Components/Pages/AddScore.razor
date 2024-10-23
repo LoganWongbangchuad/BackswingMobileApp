@@ -1,6 +1,9 @@
 ﻿@page "/AddScore"
 
 @using System.ComponentModel.DataAnnotations
+@inject LeaderboardService leaderboardService
+@inject NavigationManager NavigationManager
+
 
 <EditForm Model="@scoreModel" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -28,10 +31,17 @@
 @code {
     private ScoreModel scoreModel = new ScoreModel();
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        // Handle the form submission, e.g., save the score to a database
-        Console.WriteLine($"Score submitted: {scoreModel.Name} - {scoreModel.Score}");
+        var player = new Player
+            {
+                Name = scoreModel.Name,
+                Score = scoreModel.Score
+            };
+
+        await leaderboardService.SavePlayerAsync(player);
+        Console.WriteLine($"Score submitted: {player.Name} - {player.Score}");
+        NavigationManager.NavigateTo("/Leaderboards");
     }
 
     public class ScoreModel
