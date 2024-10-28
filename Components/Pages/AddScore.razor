@@ -4,7 +4,6 @@
 @inject LeaderboardService leaderboardService
 @inject NavigationManager NavigationManager
 
-
 <EditForm Model="@scoreModel" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -14,8 +13,8 @@
 
         <div class="form-group">
             <label for="inputName">Name</label>
-            <InputText id="inputName" class="form-control" @bind-Value="scoreModel.Name" placeholder="Your name" />
-            <ValidationMessage For="@(() => scoreModel.Name)" />
+            <InputText id="inputName" class="form-control" @bind-Value="scoreModel.Username" placeholder="Your name" />
+            <ValidationMessage For="@(() => scoreModel.Username)" />
         </div>
 
         <div class="form-group">
@@ -35,19 +34,20 @@
     {
         var player = new Player
             {
-                Name = scoreModel.Name,
+                Username = scoreModel.Username,
                 Score = scoreModel.Score
             };
 
         await leaderboardService.SavePlayerAsync(player);
-        Console.WriteLine($"Score submitted: {player.Name} - {player.Score}");
+        Console.WriteLine($"Score submitted: {player.Username} - {player.Score}");
         NavigationManager.NavigateTo("/Leaderboards");
     }
+
 
     public class ScoreModel
     {
         [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Score is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Score must be a positive number.")]

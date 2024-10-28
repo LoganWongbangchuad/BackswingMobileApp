@@ -31,6 +31,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="/Leaderboards" class="btn btn-outline-secondary">Leaderboards</a>
+                                        <button class="btn btn-outline-danger" @onclick="() => DeleteCourse(course.Id)">Delete</button>
                                     </div>
                                     <small class="text-muted">@course.Holes Holes</small>
                                 </div>
@@ -50,5 +51,11 @@
     protected override async Task OnInitializedAsync()
     {
         CourseList = await CourseService.GetCoursesAsync();
+    }
+
+    private async Task DeleteCourse(int courseId)
+    {
+        await CourseService.DeleteCourseAsync(courseId);
+        CourseList = await CourseService.GetCoursesAsync(); // Refresh the course list
     }
 }
