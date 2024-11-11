@@ -1,6 +1,7 @@
 using SQLite;
 using System.ComponentModel.DataAnnotations;
 
+//[Table("player")]
 public class Player
 {
     [PrimaryKey, AutoIncrement]

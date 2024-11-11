@@ -1,7 +1,63 @@
 ﻿@page "/Login"
+@using BackswingMobileApp.Services
+@inject AuthService AuthService
+@inject SessionService SessionService
+@inject NavigationManager NavigationManager
 
-@using System.ComponentModel.DataAnnotations
+<div class="d-flex justify-content-center align-items-center min-vh-75 bg-light">
+    <div class="card shadow-lg" style="width: 22rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Login</h3>
 
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@ErrorMessage</div>
+            }
+
+            <form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input @bind="Username" id="username" class="form-control" placeholder="Enter your username" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input @bind="Password" id="password" type="password" class="form-control" placeholder="Enter your password" />
+                </div>
+                <button type="button" class="btn btn-primary w-100" @onclick="PerformLogin">Login</button>
+            </form>
+
+            <div class="mt-3">
+                <label>New to Backswing?</label>
+                <NavLink href="/CreateAccount">Join now</NavLink>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string Username { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string? ErrorMessage { get; set; }
+
+    private async Task PerformLogin()
+    {
+        var player = await AuthService.Login(Username, Password);
+        if (player != null)
+        {
+            // Store the logged-in user in SessionService
+            SessionService.CurrentPlayer = player;
+            // Navigate to dashboard or home page
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            ErrorMessage = "Invalid username or password";
+        }
+    }
+}
+
+
+@*
 <EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -58,3 +114,4 @@
         public bool RememberMe { get; set; }
     }
 }
+*@

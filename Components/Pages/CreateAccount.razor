@@ -1,5 +1,76 @@
 ﻿@page "/CreateAccount"
+@using BackswingMobileApp.Services
 
+@inject AuthService AuthService
+@inject NavigationManager NavigationManager
+
+<div class="d-flex justify-content-center align-items-center min-vh-75 bg-light">
+    <div class="card shadow-lg" style="width: 24rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Create Account</h3>
+
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">@ErrorMessage</div>
+            }
+
+            <form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input @bind="Username" id="username" class="form-control" placeholder="Enter a username" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input @bind="Email" id="email" type="email" class="form-control" placeholder="Enter your email" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input @bind="Password" id="password" type="password" class="form-control" placeholder="Enter a password" />
+                </div>
+                <button type="button" class="btn btn-primary w-100" @onclick="Register">Create Account</button>
+            </form>
+
+            <p class="text-center mt-3">
+                Already have an account? Log in  <a href="/login">here</a>.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string Username { get; set; } = string.Empty;
+    private string Email { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string? ErrorMessage { get; set; }
+
+    private async Task Register()
+    {
+        var newPlayer = new Player { Username = Username, Email = Email, Password = Password };
+
+        if (await AuthService.IsUsernameOrEmailTaken(Username, Email))
+        {
+            ErrorMessage = "Username or Email is already taken";
+            return;
+        }
+
+        var success = await AuthService.Register(newPlayer);
+        if (success)
+        {
+            // Redirect to login after successful registration
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            ErrorMessage = "Registration failed";
+        }
+    }
+}
+
+
+
+
+
+@*
 @using System.ComponentModel.DataAnnotations
 
 <EditForm Model="@accountModel" OnValidSubmit="@HandleValidSubmit">
@@ -65,3 +136,4 @@
         public string ConfirmPassword { get; set; }
     }
 }
+*@

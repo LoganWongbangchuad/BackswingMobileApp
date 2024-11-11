@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using BackswingMobileApp.Services
+@inject SessionService SessionService
 <!doctype html>
 <html lang="en">
   <head>
@@ -58,6 +60,7 @@
       <section class="jumbotron text-center">
         <div class="container">
           <img class="mb-4" src="Resources/Images/backswinglogo.png" alt="Backswing Logo" width="72" height="72">
+                <h3>Hello @SessionService.CurrentPlayer?.Username!</h3>
           <h1 class="jumbotron-heading">Welcome to Backswing</h1>
                 <p class="lead text-muted">Backswing is the ultimate destination for golf enthusiasts. 
                     With Backswing, you can share and compare your golf scores, 

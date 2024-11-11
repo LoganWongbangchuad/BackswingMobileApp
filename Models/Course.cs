@@ -1,3 +1,4 @@
+//using BackswingMobileApp.Models;
 using SQLite;
 
 public class Course
@@ -8,4 +9,6 @@ public class Course
     public string ImageUrl { get; set; }
     public string Description { get; set; }
     public int Holes { get; set; }
+
+    //public List<Leaderboard> Leaderboards { get; set; } // Navigation property for related scores
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BackswingMobileApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace BackswingMobileApp
 {
@@ -14,6 +15,11 @@ namespace BackswingMobileApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            //builder.Services.AddTransient<MainPage>();
+            //builder.Services.AddSingleton<DatabaseHelper>();
+            builder.Services.AddSingleton<SessionService>();
+
+            builder.Services.AddSingleton<AuthService>();
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
