@@ -57,15 +57,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <MauiImage Remove="Resources\Images\backswinglogo.png" />
-      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
+      <AndroidResource Remove="wwwroot\NewFolder\**" />
+      <Compile Remove="wwwroot\NewFolder\**" />
+      <Content Remove="wwwroot\NewFolder\**" />
+      <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+      <None Remove="wwwroot\NewFolder\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Resources\Images\backswinglogo.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+      <None Remove="Resources\Images\me.jpg" />
     </ItemGroup>
 
     <ItemGroup>
@@ -75,6 +75,16 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
         <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiImage Update="Resources\Images\backswinglogo.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </MauiImage>
+      <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+      <MauiImage Update="Resources\Images\me.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </MauiImage>
     </ItemGroup>
 
 </Project>

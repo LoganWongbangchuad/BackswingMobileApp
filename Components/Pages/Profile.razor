@@ -1,0 +1,54 @@
+﻿@page "/profile"
+@using BackswingMobileApp.Services
+
+@inject SessionService SessionService
+
+<div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+                <img src="Images\me.jpg" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+                <h5 class="my-3">@SessionService.CurrentPlayer?.Username</h5>
+            <div class="d-flex justify-content-center mb-2">
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Edit Profile</button>
+            </div>
+          </div>
+        </div>
+       </div>
+       </div>
+        <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+       
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                    <p class="text-muted mb-0">@SessionService.CurrentPlayer?.Email</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                    <p class="text-muted mb-0">@SessionService.CurrentPlayer?.Phone</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                    <p class="text-muted mb-0">@SessionService.CurrentPlayer?.Address</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+@code {
+}

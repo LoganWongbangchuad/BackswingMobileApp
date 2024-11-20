@@ -23,8 +23,8 @@ namespace BackswingMobileApp
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Logging.AddDebug();
 #endif
             //register the leaderboard service
             builder.Services.AddSingleton<LeaderboardService>();

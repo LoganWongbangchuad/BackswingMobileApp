@@ -13,7 +13,7 @@ public class PlayerService
         //DatabaseHelper.InitializeDatabaseAsync().Wait(); // Ensure the database is initialized
         //_database = DatabaseHelper.GetDatabaseConnection();
 
-        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "players.db");
+        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
         _database = new SQLiteAsyncConnection(databasePath);
         _database.CreateTableAsync<Player>().Wait();
 

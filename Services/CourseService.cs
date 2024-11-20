@@ -14,7 +14,7 @@ public class CourseService
         //DatabaseHelper.InitializeDatabaseAsync().Wait(); // Ensure the database is initialized
         //_database = DatabaseHelper.GetDatabaseConnection();
 
-        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "courses.db");
+        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "course.db");
         _database = new SQLiteAsyncConnection(databasePath);
         _database.CreateTableAsync<Course>(CreateFlags.None).Wait();
     }

@@ -10,7 +10,7 @@ public class LeaderboardService
 
     public LeaderboardService()
     {
-        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "players.db");
+        var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "player.db");
         _database = new SQLiteAsyncConnection(databasePath);
         _database.CreateTableAsync<Player>(CreateFlags.None).Wait();
     }
@@ -18,7 +18,7 @@ public class LeaderboardService
     // Create
     public Task<int> SavePlayerAsync(Player player)
     {
-        return  _database.InsertAsync(player);
+        return _database.InsertAsync(player);
 
     }
 
@@ -37,7 +37,7 @@ public class LeaderboardService
     // Update
     public Task<int> UpdatePlayerAsync(Player player)
     {
-        return  _database.UpdateAsync(player);
+        return _database.UpdateAsync(player);
     }
 
     // Delete
@@ -60,4 +60,14 @@ public class LeaderboardService
     //    return await SavePlayerAsync(player);
     //}
 
+    /*
+// Retrieve players by courseId, ordered by score
+public Task<List<Player>> GetPlayersByCourseAsync(int courseId)
+    {
+        return _database.Table<Player>()
+                        .Where(player => player.courseId == courseId)
+                        .OrderByDescending(player => player.Score)
+                        .ToListAsync();
+    }
+    */
 }
