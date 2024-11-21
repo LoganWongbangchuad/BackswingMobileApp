@@ -4,57 +4,72 @@
 
 @inject LeaderboardService LeaderboardService
 
-<div class="container leaderboard-container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="leaderboard-table p-4">
-                <div class="table-title">Leaderboard</div>
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Player Name</th>
-                            <th scope="col">Score</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var player in Players)
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">Leaderboard</h1>
+        <p class="text-muted">Check out the top players and their scores!</p>
+    </div>
 
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">Top Players</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-info">
+                    <tr>
+                        <th scope="col">Player Name</th>
+                        <th scope="col">Score</th>
+                        <th scope="col" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Players.Any())
+                    {
+                        @foreach (var player in Players)
                         {
                             <tr>
                                 <td>@player.Username</td>
                                 <td>@player.Score</td>
-                                <button class="btn btn-outline-danger" @onclick="() => DeletePlayer(player.Id)">Delete</button>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => DeletePlayer(player.Id)">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </td>
                             </tr>
                         }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">
+                                No players found. Add some scores to get started!
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<section class="jumbotron text-center">
-<div class="container">
-    <p>
-        <a href="/AddScore" class="btn btn-primary my-2">Add Score</a>
-    </p>
+    <div class="text-center mt-4">
+        <a href="/AddScore" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle"></i> Add Score
+        </a>
+    </div>
 </div>
-</section>
-
 
 @code {
     private List<Player> Players { get; set; } = new List<Player>();
 
     protected override async Task OnInitializedAsync()
-
     {
         Players = await LeaderboardService.GetPlayersAsync();
     }
+
     private async Task DeletePlayer(int playerId)
     {
         await LeaderboardService.DeletePlayerAsync(playerId);
         Players = await LeaderboardService.GetPlayersAsync();
-
     }
 }
