@@ -1,0 +1,61 @@
+﻿@page "/EditProfile"
+@using BackswingMobileApp.Services
+
+@inject SessionService SessionService
+@inject NavigationManager NavigationManager
+
+<h3>Edit Profile</h3>
+
+<EditForm Model="userProfile" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label for="username">Username:</label>
+        <InputText id="username" @bind-Value="userProfile.Username" class="form-control" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <InputText id="email" @bind-Value="userProfile.Email" class="form-control" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <InputText id="password" @bind-Value="userProfile.Password" class="form-control" />
+    </div>
+    <div>
+        <label for="address">Address:</label>
+        <InputText id="address" @bind-Value="userProfile.Address" class="form-control" />
+    </div>
+    <div>
+        <label for="phone">Phone Number:</label>
+        <InputText id="phone" @bind-Value="userProfile.Phone" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</EditForm>
+
+@code {
+    private Player userProfile;
+
+    protected override void OnInitialized()
+    {
+        // Clone the current user to avoid directly editing the session's user
+        userProfile = new Player
+            {
+                Username = SessionService.CurrentPlayer?.Username,
+                Email = SessionService.CurrentPlayer?.Email,
+                Address = SessionService.CurrentPlayer?.Address,
+                Phone = SessionService.CurrentPlayer?.Phone,
+                Password = SessionService.CurrentPlayer?.Password
+            };
+    }
+
+    private void HandleValidSubmit()
+    {
+        // Update user info in the session
+        SessionService.UpdateUser(userProfile);
+
+        // Optionally, navigate back to a profile or home page
+        NavigationManager.NavigateTo("/profile");
+    }
+}
